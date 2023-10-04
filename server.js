@@ -10,12 +10,13 @@ const port = 8081;
 const userModel = require("./src/model/user.model")
 
 const userRoute = require("./src/route/user.route");
+const categoryRoute = require("./src/route/category.route");
 
 // parse requests of content-type - application/json
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200,
+const corsOptions = {
+	origin: 'http://localhost:3000',
+	credentials: true,            //access-control-allow-credentials:true
+	optionSuccessStatus: 200,
 }
 
 app.use(morgan("dev"));
@@ -28,7 +29,7 @@ app.set("view engine", "ejs");
 
 connectDB();
 
-app.use(userRoute);
+app.use(userRoute, categoryRoute);
 
 app.use(userModel);
 
@@ -36,5 +37,5 @@ app.use(userModel);
 
 // set port, listen for requests
 app.listen(port, () => {
-    console.log("Server on port: " + port);
+	console.log("Server on port: " + port);
 });

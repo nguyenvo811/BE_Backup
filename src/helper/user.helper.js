@@ -4,35 +4,35 @@ const { createToken } = require("../middleware/auth");
 
 const register = (data) => {
 	return new Promise(async (resolve, reject) => {
-		const findUser = await User.findOne({email: data.email});
+		const findUser = await User.findOne({ email: data.email });
 		if (findUser) {
 			console.log("Email đã tồn tại!");
 			return reject("Email đã tồn tại");
 		} else {
-					const saltPassword = await User.hashPassword(data.password);
-					const newData = {
-							fullName: data.fullName,
-							phoneNumber: data.phoneNumber,
-							email: data.email,
-							password: saltPassword
-					}; 
-					console.log(newData);
-					await User(newData)
-							.save()
-							.then((res) => {
-									return resolve(res);
-							})
-							.catch((error) => {
-									return reject(error);
-							}
-					);
-			}
+			const saltPassword = await User.hashPassword(data.password);
+			const newData = {
+				fullName: data.fullName,
+				phoneNumber: data.phoneNumber,
+				email: data.email,
+				password: saltPassword
+			};
+			console.log(newData);
+			await User(newData)
+				.save()
+				.then((res) => {
+					return resolve(res);
+				})
+				.catch((error) => {
+					return reject(error);
+				}
+				);
+		}
 	});
 };
 
 const login = (email, password) => {
 	return new Promise(async (resolve, reject) => {
-		const findUser = await User.findOne({email: email});
+		const findUser = await User.findOne({ email: email });
 		if (!findUser) {
 			console.log("Tài khoản không tồn tại!");
 			return reject("Tài khoản không tồn tại!");
@@ -44,7 +44,7 @@ const login = (email, password) => {
 			if (!passwordIsValid) {
 				console.log("Mật khẩu không đúng!");
 				return reject("Mật khẩu không đúng!");
-			} else { 
+			} else {
 				const accessToken = createToken(email, findUser._id, findUser.role);
 				console.log("Login thành công!");
 				return resolve(accessToken);
@@ -55,13 +55,13 @@ const login = (email, password) => {
 
 const findAll = () => {
 	return new Promise(async (resolve, reject) => {
-			const findUsers = await User.find();
-			console.log(findUsers);
-			if (findUsers) {
-					return resolve(findUsers);
-			} else {
-					return reject("Kho dữ liệu trống!");
-			}
+		const findUsers = await User.find();
+		console.log(findUsers);
+		if (findUsers) {
+			return resolve(findUsers);
+		} else {
+			return reject("Kho dữ liệu trống!");
+		}
 	});
 };
 
@@ -83,26 +83,26 @@ const updateUser = (data) => {
 		console.log(findUser)
 		if (findUser) {
 			await User
-			.findByIdAndUpdate(findUser, {
-				$set: {
-					email: data.email,
-					fullName: data.fullName,
-					phoneNumber: data.phoneNumber,
-					role: data.role
-				},
-			}, {
-				new: true,
-				upsert: true,
-				rawResult: true 
-			})
-			.then((res) => {
-				console.log(res)
-				return resolve(res);
-			})
-			.catch((error) => {
-				return reject(error);
-			});
-		} else { 
+				.findByIdAndUpdate(findUser, {
+					$set: {
+						email: data.email,
+						fullName: data.fullName,
+						phoneNumber: data.phoneNumber,
+						role: data.role
+					},
+				}, {
+					new: true,
+					upsert: true,
+					rawResult: true
+				})
+				.then((res) => {
+					console.log(res)
+					return resolve(res);
+				})
+				.catch((error) => {
+					return reject(error);
+				});
+		} else {
 			return reject("Người dùng không tồn tại!");
 		}
 	});

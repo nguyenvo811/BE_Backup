@@ -66,7 +66,7 @@ const viewProfile = async (req, res) => {
 				return res.status(500).json({ result: false, message: error });
 			});
 	} catch (error) {
-	return res.status(500).json({ result: false, message: error });
+		return res.status(500).json({ result: false, message: error });
 	}
 };
 
