@@ -19,49 +19,48 @@ const createToken = async (email, userID, role) => {
 	}
 }
 
-const verifyToken = async (req, res, next) => {
+const requiredSignIn = async (req, res, next) => {
 	const authHeader = req.header('Authorization');
-	const token = authHeader.split(' ')[1];
 	let key = process.env.JWT_SECRET;
-
-	if (!token) {
-		return res.sendStatus(401)
+	if (!authHeader) {
+		return res.status(403).send({ message: "Vui lòng đăng nhập!" })
 	}
+	const token = authHeader.split(' ')[1];
+	console.log(token)
 	try {
 		const decoded = jwt.verify(token, key)
-		const user = await User.findOne({ _id: decoded._id, role: "Admin" })
-		if (!user) {
-			// User with given ID not found or is not an admin
-			return res.status(500).send("Access denied, just admin can do this process");
-		}
 		req.user = decoded._id
 		next();
 	} catch (error) {
-		console.log(error);
-		return res.sendStatus(403)
+		if(error.expiredAt && error.expiredAt< new Date()){
+			return res.status(401).send({ message:"Session hết hạn. Vui lòng đăng nhập lại!" })
+		}else{
+			console.log(error);
+			return res.status(401).send({ message: "Token không chính xác. Vui lòng đăng nhập lại!" });
+		}
 	}
 }
 
-// const requiredSignIn = async (req, res, next) => { 
-//     const authHeader = req.header('Authorization');
-//     const token = authHeader.split(' ')[1];
-//     let key = process.env.JWT_SECRET;
+const verifyToken = async (req, res, next) => {
+	const user = await User.findOne({ _id: req.user, role: "Admin" })
+	if (!user) {
+		// Staff with given ID not found or is not an admin
+		return res.status(500).send({ message: "Thao tác thất bai. Chỉ Admin mới có quyền thao tác!" });
+	}
+	next();
+}
 
-//     if (!token) {
-//         return res.sendStatus(401)
-//     }
-//     try {
-//         const decoded = jwt.verify(token, key)
-//         req.user = decoded._id
-//         next();
-//     } catch (error) {
-//         console.log(error);
-//         return res.sendStatus(403)
-//     } 
-// }
+const isStaff = async (req, res, next) => {
+	const user = await User?.findOne({ _id: req.user, role: ["Staff", "Admin"] })
+	if (!user) { 
+		return res.status(500).send({ message: "Thao tác thất bai. Chỉ Admin và Staff mới có quyền thao tác!" });
+	}
+	next();
+}
 
 module.exports = {
 	createToken: createToken,
 	verifyToken: verifyToken,
-	// requiredSignIn: requiredSignIn
+	requiredSignIn: requiredSignIn,
+	isStaff: isStaff
 }

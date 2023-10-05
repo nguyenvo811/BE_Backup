@@ -10,7 +10,8 @@ const UserSchema = new mongoose.Schema({
 	phoneNumber: { type: String, required: true },
 	role: {
 		type: String,
-		default: "Admin"
+		enum: ["Admin", "Staff"],
+		default: "Staff"
 	},
 }, { timestamps: true });
 

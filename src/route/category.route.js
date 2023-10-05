@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { verifyToken } = require("../middleware/auth");
+const { verifyToken, requiredSignIn, isStaff } = require("../middleware/auth");
 const Category = require("../controller/category.controller");
 
-router.post("/categories/addcategory", verifyToken, Category.addCategory);
-router.get("/categories", verifyToken, Category.findAll);
-router.get("/categories/:categoryID", verifyToken, Category.findCategory);
-router.patch("/categories/:categoryID", verifyToken, Category.editCategory);
-router.delete("/categories/:categoryID", verifyToken, Category.deleteCategory);
+router.post("/categories/addcategory", requiredSignIn, isStaff, Category.addCategory);
+router.get("/categories", requiredSignIn, isStaff, Category.findAll);
+router.get("/categories/:categoryID", requiredSignIn, isStaff, Category.findCategory);
+router.patch("/categories/:categoryID", requiredSignIn, isStaff, Category.editCategory);
+router.delete("/categories/:categoryID", requiredSignIn, verifyToken, Category.deleteCategory);
 
 module.exports = router;

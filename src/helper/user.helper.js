@@ -33,23 +33,17 @@ const register = (data) => {
 const login = (email, password) => {
 	return new Promise(async (resolve, reject) => {
 		const findUser = await User.findOne({ email: email });
-		if (!findUser) {
-			console.log("Tài khoản không tồn tại!");
-			return reject("Tài khoản không tồn tại!");
+		if (!findUser || !bcrypt.compareSync(
+			password,
+			findUser.password
+		)) {
+			console.log("Xác thực thất bại. Email hoặc mật khẩu không đúng!");
+			return reject("Xác thực thất bại. Email hoặc mật khẩu không đúng!");
 		} else {
-			var passwordIsValid = bcrypt.compareSync(
-				password,
-				findUser.password
-			);
-			if (!passwordIsValid) {
-				console.log("Mật khẩu không đúng!");
-				return reject("Mật khẩu không đúng!");
-			} else {
-				const accessToken = createToken(email, findUser._id, findUser.role);
-				console.log("Login thành công!");
-				return resolve(accessToken);
-			}
-		};
+			const accessToken = createToken(email, findUser._id, findUser.role);
+			console.log("Login thành công!");
+			return resolve(accessToken);
+		}
 	});
 };
 

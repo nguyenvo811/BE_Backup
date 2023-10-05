@@ -11,6 +11,7 @@ const userModel = require("./src/model/user.model")
 
 const userRoute = require("./src/route/user.route");
 const categoryRoute = require("./src/route/category.route");
+const productRoute = require("./src/route/product.route");
 
 // parse requests of content-type - application/json
 const corsOptions = {
@@ -29,8 +30,7 @@ app.set("view engine", "ejs");
 
 connectDB();
 
-app.use(userRoute, categoryRoute);
-
+app.use(userRoute, categoryRoute, productRoute);
 app.use(userModel);
 
 
