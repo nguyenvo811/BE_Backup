@@ -278,6 +278,17 @@ const deleteProduct = (productID) => {
 	});
 };
 
+const findAll = () => {
+	return new Promise(async (resolve, reject) => {
+	  const findProduct = await Product.find().populate('category', 'categoryName');
+	  if (findProduct) {
+		return resolve(findProduct);
+	  } else {
+		return reject("Kho dữ liệu trống!");
+	  }
+	});
+  };
+
 const findProduct = (productID) => {
 	return new Promise(async (resolve, reject) => {
 		const findProduct = await Product.findById(productID).populate('category', 'categoryName');
@@ -320,6 +331,7 @@ module.exports = {
 	addAmplifier: addAmplifier,
 	editAmplifier: editAmplifier,
 	deleteProduct: deleteProduct,
+	findAll: findAll,
 	findProduct: findProduct,
 	findProductByCategory: findProductByCategory,
 	searchProducts: searchProducts

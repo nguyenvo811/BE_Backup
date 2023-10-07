@@ -10,7 +10,7 @@ router.patch("/products/timers/:productID", requiredSignIn, isStaff, Product.edi
 router.post("/products/speakers/:productID", requiredSignIn, isStaff, Product.editSpeaker);
 router.post("/products/amplifiers/:productID", requiredSignIn, isStaff, Product.editAmplifier);
 router.delete("/products/:productID", requiredSignIn, verifyToken, Product.deleteProduct);
-// router.get("/products", Product.findAll);
+router.get("/products", Product.findAll);
 router.get("/products/:productID", Product.findProduct);
 router.get("/products/products-category/:categoryID", Product.findProductByCategory);
 router.get("/search-products", Product.searchProducts);

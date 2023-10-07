@@ -142,7 +142,6 @@ const addSpeaker = async (req, res) => {
 		color: req.body.color,
 		origin: req.body.origin,
 		moreAttribute: {
-			wattage: req.body.wattage,
 			frequencyResponse: req.body.frequencyResponse,
 			averageSensitivity: req.body.averageSensitivity,
 			maximumPowerHandlingCapacity: req.body.maximumPowerHandlingCapacity,
@@ -222,6 +221,21 @@ const deleteProduct = async (req, res) => {
 	}
 };
 
+const findAll = async (req, res) => {
+	try {
+		await productHelper
+			.findAll()
+			.then((result) => {
+				return res.status(200).json({ result: true, data: result });
+			})
+			.catch((error) => {
+				return res.status(500).json({ result: false, message: error });
+			});
+	} catch (error) {
+		return res.status(500).json({ result: false, message: error });
+	}
+};
+
 const findProduct = async (req, res) => {
 	try {
 		const productID = req.params.productID;
@@ -279,6 +293,7 @@ module.exports = {
 	addAmplifier: addAmplifier,
 	editAmplifier: editAmplifier,
 	deleteProduct: deleteProduct,
+	findAll: findAll,
 	findProduct: findProduct,
 	findProductByCategory: findProductByCategory,
 	searchProducts: searchProducts

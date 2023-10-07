@@ -4,7 +4,7 @@ const { verifyToken, requiredSignIn, isStaff } = require("../middleware/auth");
 const Category = require("../controller/category.controller");
 
 router.post("/categories/addcategory", requiredSignIn, isStaff, Category.addCategory);
-router.get("/categories", requiredSignIn, isStaff, Category.findAll);
+router.get("/categories", Category.findAll);
 router.get("/categories/:categoryID", requiredSignIn, isStaff, Category.findCategory);
 router.patch("/categories/:categoryID", requiredSignIn, isStaff, Category.editCategory);
 router.delete("/categories/:categoryID", requiredSignIn, verifyToken, Category.deleteCategory);
