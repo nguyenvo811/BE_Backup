@@ -14,6 +14,7 @@ const register = (data) => {
 				fullName: data.fullName,
 				phoneNumber: data.phoneNumber,
 				email: data.email,
+				gender: data.gender,
 				password: saltPassword
 			};
 			console.log(newData);
@@ -82,6 +83,7 @@ const updateUser = (data) => {
 						email: data.email,
 						fullName: data.fullName,
 						phoneNumber: data.phoneNumber,
+						gender: data.gender,
 						role: data.role
 					},
 				}, {

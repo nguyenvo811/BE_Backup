@@ -7,6 +7,7 @@ const register = async (req, res) => {
 			fullName: req.body.fullName,
 			phoneNumber: req.body.phoneNumber,
 			email: req.body.email,
+			gender: req.body.gender,
 			password: req.body.password,
 		});
 		console.log("control", req.body)
@@ -77,6 +78,7 @@ const updateUser = async (req, res) => {
 			email: req.body.email,
 			role: req.body.role,
 			phoneNumer: req.body.phoneNumber,
+			gender: req.body.gender,
 			fullName: req.body.fullName,
 		};
 		console.log(req.body)
