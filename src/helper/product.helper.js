@@ -3,6 +3,7 @@ const Product = require("../model/product.model");
 const addTimer = (data) => {
 	return new Promise(async (resolve, reject) => {
 		const findTimer = await Product.findOne({ productName: data.productName });
+		console.log(data)
 		if (findTimer) {
 			console.log("Sản phẩm đã tồn tại!");
 			return reject("Sản phẩm đã tồn tại");
@@ -11,12 +12,10 @@ const addTimer = (data) => {
 				productName: data.productName,
 				description: data.description,
 				category: data.category,
-				color: data.color,
-				image: data.image,
 				origin: data.origin,
+				variants: data.variants,
 				moreAttribute: data.moreAttribute
 			};
-			console.log(newData)
 			await Product(newData)
 				.save()
 				.then((res) => {
@@ -100,8 +99,7 @@ const addSpeaker = (data) => {
 				productName: data.productName,
 				description: data.description,
 				category: data.category,
-				color: data.color,
-				image: data.image,
+				variants: data.variants,
 				origin: data.origin,
 				moreAttribute: data.moreAttribute
 			};
@@ -189,8 +187,7 @@ const addAmplifier = (data) => {
 				productName: data.productName,
 				description: data.description,
 				category: data.category,
-				color: data.color,
-				image: data.image,
+				variants: data.variants,
 				origin: data.origin,
 				moreAttribute: data.moreAttribute
 			};

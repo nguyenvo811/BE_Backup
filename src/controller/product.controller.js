@@ -6,9 +6,8 @@ const addTimer = async (req, res) => {
 		productName: req.body.productName,
 		description: req.body.description,
 		category: req.body.category,
-		image: req.body.image,
-		color: req.body.color,
 		origin: req.body.origin,
+		variants: req.body.variants,
 		moreAttribute: {
 			supplyTimer: req.body.supplyTimer,
 			switchContacts: req.body.switchContacts,
@@ -18,7 +17,7 @@ const addTimer = async (req, res) => {
 			batteryMemory: req.body.batteryMemory
 		}
 	});
-	console.log(req.body)
+	console.log(req.body.variants)
 	try {
 		await productHelper
 			.addTimer(newProduct)
@@ -71,8 +70,7 @@ const addAmplifier = async (req, res) => {
 		productName: req.body.productName,
 		description: req.body.description,
 		category: req.body.category,
-		image: req.body.image,
-		color: req.body.color,
+		variants: req.body.variants,
 		origin: req.body.origin,
 		moreAttribute: {
 			channelInput: req.body.channelInput,
@@ -138,9 +136,8 @@ const addSpeaker = async (req, res) => {
 		productName: req.body.productName,
 		description: req.body.description,
 		category: req.body.category,
-		image: req.body.image,
-		color: req.body.color,
 		origin: req.body.origin,
+		variants: data.body.variants,
 		moreAttribute: {
 			frequencyResponse: req.body.frequencyResponse,
 			averageSensitivity: req.body.averageSensitivity,

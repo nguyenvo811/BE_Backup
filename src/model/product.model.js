@@ -10,9 +10,11 @@ const productSchema = new mongoose.Schema({
 		ref: "Category",
 		required: true
 	},
-	image: [String],
-	color: [String],
 	origin: { type: String, required: true },
+	variants: [{
+		color: String,
+		images: [String],
+	}],
 	moreAttribute: {}
 }, { timestamps: true });
 

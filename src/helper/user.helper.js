@@ -15,6 +15,7 @@ const register = (data) => {
 				phoneNumber: data.phoneNumber,
 				email: data.email,
 				gender: data.gender,
+				role: data.role,
 				password: saltPassword
 			};
 			console.log(newData);
@@ -51,7 +52,6 @@ const login = (email, password) => {
 const findAll = () => {
 	return new Promise(async (resolve, reject) => {
 		const findUsers = await User.find();
-		console.log(findUsers);
 		if (findUsers) {
 			return resolve(findUsers);
 		} else {
@@ -74,7 +74,7 @@ const viewProfile = (userID) => {
 
 const updateUser = (data) => {
 	return new Promise(async (resolve, reject) => {
-		const findUser = await User.findById(data.userID);
+		const findUser = await viewProfile(data.userID);
 		console.log(findUser)
 		if (findUser) {
 			await User
@@ -104,36 +104,28 @@ const updateUser = (data) => {
 	});
 };
 
-// const changePass = (data) => {
-// 	return new Promise(async (resolve, reject) => {
-// 		const findUser = await User.findById(data.userID);
-// 		console.log(findUser)
-// 		if (findUser) {
-// 			await User
-// 			.findByIdAndUpdate(findUser, {
-// 				$set: {
-// 					email: data.email,
-// 					fullName: data.fullName,
-// 					phoneNumber: data.phoneNumber,
-// 					role: data.role
-// 				},
-// 			}, {
-// 				new: true,
-// 				upsert: true,
-// 				rawResult: true 
-// 			})
-// 			.then((res) => {
-// 				console.log(res)
-// 				return resolve(res);
-// 			})
-// 			.catch((error) => {
-// 				return reject(error);
-// 			});
-// 		} else { 
-// 			return reject("Người dùng không tồn tại!");
-// 		}
-// 	});
-// };
+const changePass = (user, data) => {
+	return new Promise(async (resolve, reject) => {
+		const findUser = await viewProfile(user);
+		if (findUser) {
+			// Verify the user's current password
+			const isMatch = bcrypt.compareSync(data.oldPass, findUser.password);
+
+			if (!isMatch) {
+				// Return an error if the current password is incorrect
+				return reject("Mật khẩu cũ không đúng!");
+			}
+
+			const saltPassword = await User.hashPassword(data.newPass);
+
+			findUser.password = saltPassword;
+			await findUser.save();
+			return resolve(findUser)
+		} else { 
+			return reject("Người dùng không tồn tại!");
+		}
+	});
+};
 
 const deleteUser = (userID) => {
 	return new Promise(async (resolve, reject) => {
@@ -152,5 +144,6 @@ module.exports = {
 	findAll: findAll,
 	viewProfile: viewProfile,
 	updateUser: updateUser,
+	changePass: changePass,
 	deleteUser: deleteUser
 };

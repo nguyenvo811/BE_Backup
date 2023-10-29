@@ -9,6 +9,7 @@ const register = async (req, res) => {
 			email: req.body.email,
 			gender: req.body.gender,
 			password: req.body.password,
+			role: req.body.role
 		});
 		console.log("control", req.body)
 		await userHelper
@@ -56,7 +57,7 @@ const findAll = async (req, res) => {
 };
 
 const viewProfile = async (req, res) => {
-	const userID = req.params.userID;
+	const userID = req.user;
 	try {
 		await userHelper
 			.viewProfile(userID)
@@ -95,28 +96,25 @@ const updateUser = async (req, res) => {
 	}
 };
 
-// const changePass = async (req, res) => {
-// 	try {
-// 		const dataUpdate = {
-// 			userID: req.params.userID,
-// 			email: req.body.email,
-// 			role: req.body.role,
-// 			phoneNumer: req.body.phoneNumber,
-// 			fullName: req.body.fullName,
-// 		};
-// 		console.log(req.body)
-// 		await userHelper
-// 			.updateUser(dataUpdate)
-// 			.then((result) => {
-// 				return res.status(200).json({ result: true, data: result });
-// 			})
-// 			.catch((error) => {
-// 				return res.status(500).json({ result: false, message: error });
-// 			});
-// 	} catch (error) {
-// 		return res.status(500).json({ result: false, message: error });
-// 	}
-// };
+const changePass = async (req, res) => {
+	try {
+		const data = {
+			oldPass: req.body.oldPass,
+			newPass: req.body.newPass
+		};
+		const user = req.user;
+		await userHelper
+			.changePass(user, data)
+			.then((result) => {
+				return res.status(200).json({ result: true, data: result });
+			})
+			.catch((error) => {
+				return res.status(500).json({ result: false, message: error });
+			});
+	} catch (error) {
+		return res.status(500).json({ result: false, message: error });
+	}
+};
 
 const deleteUser = async (req, res) => {
 	const userID = req.params.userID;
@@ -140,5 +138,6 @@ module.exports = {
 	findAll: findAll,
 	viewProfile: viewProfile,
 	updateUser: updateUser,
-	deleteUser: deleteUser
+	deleteUser: deleteUser,
+	changePass: changePass
 };
