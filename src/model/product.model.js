@@ -14,6 +14,7 @@ const productSchema = new mongoose.Schema({
 	variants: [{
 		color: String,
 		images: [String],
+		price: String
 	}],
 	moreAttribute: {}
 }, { timestamps: true });
