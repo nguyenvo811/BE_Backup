@@ -40,9 +40,8 @@ const editTimer = async (req, res) => {
 			productName: req.body.productName,
 			description: req.body.description,
 			category: req.body.category,
-			image: req.body.image,
-			color: req.body.color,
 			origin: req.body.origin,
+			variants: req.body.variants,
 			moreAttribute: {
 				supplyTimer: req.body.supplyTimer,
 				switchContacts: req.body.switchContacts,
@@ -137,7 +136,7 @@ const addSpeaker = async (req, res) => {
 		description: req.body.description,
 		category: req.body.category,
 		origin: req.body.origin,
-		variants: data.body.variants,
+		variants: req.body.variants,
 		moreAttribute: {
 			frequencyResponse: req.body.frequencyResponse,
 			averageSensitivity: req.body.averageSensitivity,

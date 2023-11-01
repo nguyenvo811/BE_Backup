@@ -7,7 +7,7 @@ const register = (data) => {
 		const findUser = await User.findOne({ email: data.email });
 		if (findUser) {
 			console.log("Email đã tồn tại!");
-			return reject("Email đã tồn tại");
+			return reject("Email đã tồn tại!");
 		} else {
 			const saltPassword = await User.hashPassword(data.password);
 			const newData = {

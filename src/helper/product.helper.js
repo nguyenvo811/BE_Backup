@@ -6,7 +6,7 @@ const addTimer = (data) => {
 		console.log(data)
 		if (findTimer) {
 			console.log("Sản phẩm đã tồn tại!");
-			return reject("Sản phẩm đã tồn tại");
+			return reject("Sản phẩm đã tồn tại!");
 		} else {
 			const newData = {
 				productName: data.productName,
@@ -93,7 +93,7 @@ const addSpeaker = (data) => {
 		const findTimer = await Product.findOne({ productName: data.productName });
 		if (findTimer) {
 			console.log("Sản phẩm đã tồn tại!");
-			return reject("Sản phẩm đã tồn tại");
+			return reject("Sản phẩm đã tồn tại!");
 		} else {
 			const newData = {
 				productName: data.productName,
@@ -181,7 +181,7 @@ const addAmplifier = (data) => {
 		const findTimer = await Product.findOne({ productName: data.productName });
 		if (findTimer) {
 			console.log("Sản phẩm đã tồn tại!");
-			return reject("Sản phẩm đã tồn tại");
+			return reject("Sản phẩm đã tồn tại!");
 		} else {
 			const newData = {
 				productName: data.productName,
