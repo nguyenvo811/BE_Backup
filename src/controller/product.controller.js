@@ -20,7 +20,7 @@ const addTimer = async (req, res) => {
 	console.log(req.body.variants)
 	try {
 		await productHelper
-			.addTimer(newProduct)
+			.addProduct(newProduct)
 			.then((result) => {
 				return res.status(200).json({ result: true, data: result });
 			})
@@ -33,7 +33,6 @@ const addTimer = async (req, res) => {
 };
 
 const editTimer = async (req, res) => {
-	console.log(req.body.image)
 	try {
 		const product = {
 			productID: req.params.productID,
@@ -84,7 +83,7 @@ const addAmplifier = async (req, res) => {
 	console.log(req.body)
 	try {
 		await productHelper
-			.addAmplifier(newProduct)
+			.addProduct(newProduct)
 			.then((result) => {
 				return res.status(200).json({ result: true, data: result });
 			})
@@ -152,7 +151,7 @@ const addSpeaker = async (req, res) => {
 	console.log(req.body)
 	try {
 		await productHelper
-			.addSpeaker(newProduct)
+			.addProduct(newProduct)
 			.then((result) => {
 				return res.status(200).json({ result: true, data: result });
 			})
