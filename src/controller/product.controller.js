@@ -50,6 +50,7 @@ const editTimer = async (req, res) => {
 				batteryMemory: req.body.batteryMemory
 			}
 		};
+		console.log("update image", req.body.variants)
 		await productHelper
 			.editTimer(product)
 			.then((result) => {
@@ -103,8 +104,7 @@ const editAmplifier = async (req, res) => {
 			productName: req.body.productName,
 			description: req.body.description,
 			category: req.body.category,
-			image: req.body.image,
-			color: req.body.color,
+			variants: req.body.variants,
 			origin: req.body.origin,
 			moreAttribute: {
 				channelInput: req.body.channelInput,
@@ -171,8 +171,7 @@ const editSpeaker = async (req, res) => {
 			productName: req.body.productName,
 			description: req.body.description,
 			category: req.body.category,
-			image: req.body.image,
-			color: req.body.color,
+			variants: req.body.variants,
 			origin: req.body.origin,
 			moreAttribute: {
 				wattage: req.body.wattage,

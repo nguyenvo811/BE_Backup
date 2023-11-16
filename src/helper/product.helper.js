@@ -32,62 +32,33 @@ const addProduct = (data) => {
 const editTimer = (data) => {
 	return new Promise(async (resolve, reject) => {
 		const findProduct = await Product.findById(data.productID).populate('category');
-		const newImg = data.variants.map((variant) => variant.images);
-		console.log(newImg.length > 0)
 
-		// if (findProduct) {
-		// 	if (data.image.length > 0) {
-		// 		await Product
-		// 			.findByIdAndUpdate(findProduct, {
-		// 				$set: {
-		// 					productName: data.productName,
-		// 					description: data.description,
-		// 					category: data.category,
-		// 					origin: data.origin,
-		// 					moreAttribute: data.moreAttribute,
-		// 					variants: {
-
-		// 					}
-		// 				},
-		// 			}, {
-		// 				new: true,
-		// 				upsert: true,
-		// 				rawResult: true
-		// 			})
-		// 			.then((res) => {
-		// 				return resolve(res);
-		// 			})
-		// 			.catch((error) => {
-		// 				console.error(JSON.stringify(error));
-		// 				return reject(error);
-		// 			});
-		// 	} else {
-		// 		await Product
-		// 			.findByIdAndUpdate(findProduct, {
-		// 				$set: {
-		// 					productName: data.productName,
-		// 					description: data.description,
-		// 					category: data.category,
-		// 					color: data.color,
-		// 					origin: data.origin,
-		// 					moreAttribute: data.moreAttribute,
-		// 				},
-		// 			}, {
-		// 				new: true,
-		// 				upsert: true,
-		// 				rawResult: true
-		// 			})
-		// 			.then((res) => {
-		// 				return resolve(res);
-		// 			})
-		// 			.catch((error) => {
-		// 				console.error(JSON.stringify(error));
-		// 				return reject(error);
-		// 			});
-		// 	}
-		// } else {
-		// 	return reject("Sản phẩm không tồn tại!");
-		// }
+		if (findProduct) {
+			await Product
+				.findByIdAndUpdate(findProduct, {
+					$set: {
+						productName: data.productName,
+						description: data.description,
+						category: data.category,
+						origin: data.origin,
+						moreAttribute: data.moreAttribute,
+						variants: data.variants
+					},
+				}, {
+					new: true,
+					upsert: true,
+					rawResult: true
+				})
+				.then((res) => {
+					return resolve(res);
+				})
+				.catch((error) => {
+					console.error(JSON.stringify(error));
+					return reject(error);
+				});
+		} else {
+			return reject("Sản phẩm không tồn tại!");
+		}
 	});
 };
 
