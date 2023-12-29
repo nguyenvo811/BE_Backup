@@ -2,12 +2,27 @@ const Product = require("../model/product.model");
 const productHelper = require("../helper/product.helper");
 
 const addTimer = async (req, res) => {
+	let description = req.body.description;
+
+	// Check if files were uploaded
+	if (req.files && req.files.length > 0) {
+			// Assuming you have only one image file for simplicity
+			const imageBuffer = req.files[0].buffer;
+			const imageData = imageBuffer.toString('base64');
+			// Add the image data to the description or handle it separately
+			description += `<img src="data:image/png;base64,${imageData}" />`;
+	}
+
 	const newProduct = new Product({
 		productName: req.body.productName,
-		description: req.body.description,
+		description: description,
 		category: req.body.category,
+		subCategory: req.body.subCategory,
 		origin: req.body.origin,
+		brand: req.body.brand,
+		video: req.body.video,
 		variants: req.body.variants,
+		active: req.body.active,
 		moreAttribute: {
 			supplyTimer: req.body.supplyTimer,
 			switchContacts: req.body.switchContacts,
@@ -39,8 +54,12 @@ const editTimer = async (req, res) => {
 			productName: req.body.productName,
 			description: req.body.description,
 			category: req.body.category,
+			subCategory: req.body.subCategory,
 			origin: req.body.origin,
+			brand: req.body.brand,
+			video: req.body.video,
 			variants: req.body.variants,
+			active: req.body.active,
 			moreAttribute: {
 				supplyTimer: req.body.supplyTimer,
 				switchContacts: req.body.switchContacts,
@@ -52,7 +71,7 @@ const editTimer = async (req, res) => {
 		};
 		console.log("update image", req.body.variants)
 		await productHelper
-			.editTimer(product)
+			.editProduct(product)
 			.then((result) => {
 				return res.status(200).json({ result: true, data: result });
 			})
@@ -65,12 +84,27 @@ const editTimer = async (req, res) => {
 };
 
 const addAmplifier = async (req, res) => {
+	let description = req.body.description;
+
+	// Check if files were uploaded
+	if (req.files && req.files.length > 0) {
+			// Assuming you have only one image file for simplicity
+			const imageBuffer = req.files[0].buffer;
+			const imageData = imageBuffer.toString('base64');
+			// Add the image data to the description or handle it separately
+			description += `<img src="data:image/png;base64,${imageData}" />`;
+	}
+
 	const newProduct = new Product({
 		productName: req.body.productName,
-		description: req.body.description,
+		description: description,
 		category: req.body.category,
+		subCategory: req.body.subCategory,
 		variants: req.body.variants,
+		brand: req.body.brand,
 		origin: req.body.origin,
+		video: req.body.video,
+		active: req.body.active,
 		moreAttribute: {
 			channelInput: req.body.channelInput,
 			channelOutput: req.body.channelOutput,
@@ -104,8 +138,12 @@ const editAmplifier = async (req, res) => {
 			productName: req.body.productName,
 			description: req.body.description,
 			category: req.body.category,
+			subCategory: req.body.subCategory,
 			variants: req.body.variants,
+			brand: req.body.brand,
 			origin: req.body.origin,
+			video: req.body.video,
+			active: req.body.active,
 			moreAttribute: {
 				channelInput: req.body.channelInput,
 				channelOutput: req.body.channelOutput,
@@ -117,7 +155,7 @@ const editAmplifier = async (req, res) => {
 			}
 		};
 		await productHelper
-			.editAmplifier(product)
+			.editProduct(product)
 			.then((result) => {
 				return res.status(200).json({ result: true, data: result });
 			})
@@ -130,12 +168,27 @@ const editAmplifier = async (req, res) => {
 };
 
 const addSpeaker = async (req, res) => {
+  let description = req.body.description;
+
+	// Check if files were uploaded
+	if (req.files && req.files.length > 0) {
+			// Assuming you have only one image file for simplicity
+			const imageBuffer = req.files[0].buffer;
+			const imageData = imageBuffer.toString('base64');
+			// Add the image data to the description or handle it separately
+			description += `<img src="data:image/png;base64,${imageData}" />`;
+	}
+	
 	const newProduct = new Product({
 		productName: req.body.productName,
-		description: req.body.description,
+		description: description,
 		category: req.body.category,
+		subCategory: req.body.subCategory,
 		origin: req.body.origin,
+		brand: req.body.brand,
+		video: req.body.video,
 		variants: req.body.variants,
+		active: req.body.active,
 		moreAttribute: {
 			frequencyResponse: req.body.frequencyResponse,
 			averageSensitivity: req.body.averageSensitivity,
@@ -148,7 +201,7 @@ const addSpeaker = async (req, res) => {
 			material: req.body.material
 		}
 	});
-	console.log(req.body)
+	console.log(newProduct)
 	try {
 		await productHelper
 			.addProduct(newProduct)
@@ -171,8 +224,12 @@ const editSpeaker = async (req, res) => {
 			productName: req.body.productName,
 			description: req.body.description,
 			category: req.body.category,
+			subCategory: req.body.subCategory,
 			variants: req.body.variants,
 			origin: req.body.origin,
+			brand: req.body.brand,
+			video: req.body.video,
+			active: req.body.active,
 			moreAttribute: {
 				wattage: req.body.wattage,
 				frequencyResponse: req.body.frequencyResponse,
@@ -187,7 +244,7 @@ const editSpeaker = async (req, res) => {
 			}
 		};
 		await productHelper
-			.editSpeaker(product)
+			.editProduct(product)
 			.then((result) => {
 				return res.status(200).json({ result: true, data: result });
 			})

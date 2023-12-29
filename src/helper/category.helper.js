@@ -9,7 +9,8 @@ const addCategory = (data) => {
 		} else {
 			const newData = {
 				categoryName: data.categoryName,
-				description: data.description
+				description: data.description,
+				subCategory: data.subCategory
 			}
 			await Category(newData)
 				.save()
@@ -33,6 +34,7 @@ const editCategory = (data) => {
 					$set: {
 						categoryName: data.categoryName,
 						description: data.description,
+						subCategory: data.subCategory
 					},
 				}, {
 					new: true,

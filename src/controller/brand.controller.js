@@ -3,11 +3,10 @@ const brandHelper = require("../helper/brand.helper");
 
 const addBrand = async (req, res) => {
   const newData = new Brand({
-    brandname: req.body.brandname,
+    brandName: req.body.brandName,
     description: req.body.description,
-    productOfBrand: req.body.productOfBrand
   });
-  console.log(req.user)
+  console.log(newData)
   try {
     await brandHelper
       .addBrand(newData)
@@ -26,9 +25,8 @@ const editBrand = async (req, res) => {
   try {
     const Brand = {
       brandID: req.params.brandID,
-      brandname: req.body.brandName,
-      description: req.body.description,
-      productOfBrand: req.body.productOfBrand
+      brandName: req.body.brandName,
+      description: req.body.description
     };
     await brandHelper
       .editBrand(Brand)

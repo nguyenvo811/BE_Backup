@@ -12,8 +12,12 @@ const addProduct = (data) => {
 				productName: data.productName,
 				description: data.description,
 				category: data.category,
+				subCategory: data.subCategory,
 				origin: data.origin,
 				variants: data.variants,
+				brand: data.brand,
+				video: data.video,
+				active: data.active,
 				moreAttribute: data.moreAttribute
 			};
 			await Product(newData)
@@ -29,7 +33,7 @@ const addProduct = (data) => {
 	})
 }
 
-const editTimer = (data) => {
+const editProduct = (data) => {
 	return new Promise(async (resolve, reject) => {
 		const findProduct = await Product.findById(data.productID).populate('category');
 
@@ -40,9 +44,13 @@ const editTimer = (data) => {
 						productName: data.productName,
 						description: data.description,
 						category: data.category,
+						subCategory: data.subCategory,
 						origin: data.origin,
-						moreAttribute: data.moreAttribute,
-						variants: data.variants
+						variants: data.variants,
+						brand: data.brand,
+						video: data.video,
+						active: data.active,
+						moreAttribute: data.moreAttribute
 					},
 				}, {
 					new: true,
@@ -62,126 +70,6 @@ const editTimer = (data) => {
 	});
 };
 
-
-const editSpeaker = (data) => {
-	return new Promise(async (resolve, reject) => {
-		const findProduct = await Product.findById(data.productID).populate('category');
-		if (findProduct) {
-			if (data.image.length > 0) {
-				const newImg = data.image
-				await Product
-					.findByIdAndUpdate(findProduct, {
-						$set: {
-							productName: data.productName,
-							description: data.description,
-							category: data.category,
-							color: data.color,
-							origin: data.origin,
-							moreAttribute: data.moreAttribute,
-							image: newImg
-						},
-					}, {
-						new: true,
-						upsert: true,
-						rawResult: true
-					})
-					.then((res) => {
-						return resolve(res);
-					})
-					.catch((error) => {
-						console.error(JSON.stringify(error));
-						return reject(error);
-					});
-			} else {
-				await Product
-					.findByIdAndUpdate(findProduct, {
-						$set: {
-							productName: data.productName,
-							description: data.description,
-							category: data.category,
-							color: data.color,
-							origin: data.origin,
-							moreAttribute: data.moreAttribute,
-						},
-					}, {
-						new: true,
-						upsert: true,
-						rawResult: true
-					})
-					.then((res) => {
-						return resolve(res);
-					})
-					.catch((error) => {
-						console.error(JSON.stringify(error));
-						return reject(error);
-					});
-			}
-		} else {
-			return reject("Sản phẩm không tồn tại!");
-		}
-	});
-};
-
-
-const editAmplifier = (data) => {
-	return new Promise(async (resolve, reject) => {
-		const findProduct = await Product.findById(data.productID).populate('category');
-		if (findProduct) {
-			if (data.image.length > 0) {
-				const newImg = data.image
-				await Product
-					.findByIdAndUpdate(findProduct, {
-						$set: {
-							productName: data.productName,
-							description: data.description,
-							category: data.category,
-							color: data.color,
-							origin: data.origin,
-							moreAttribute: data.moreAttribute,
-							image: newImg
-						},
-					}, {
-						new: true,
-						upsert: true,
-						rawResult: true
-					})
-					.then((res) => {
-						return resolve(res);
-					})
-					.catch((error) => {
-						console.error(JSON.stringify(error));
-						return reject(error);
-					});
-			} else {
-				await Product
-					.findByIdAndUpdate(findProduct, {
-						$set: {
-							productName: data.productName,
-							description: data.description,
-							category: data.category,
-							color: data.color,
-							origin: data.origin,
-							moreAttribute: data.moreAttribute,
-						},
-					}, {
-						new: true,
-						upsert: true,
-						rawResult: true
-					})
-					.then((res) => {
-						return resolve(res);
-					})
-					.catch((error) => {
-						console.error(JSON.stringify(error));
-						return reject(error);
-					});
-			}
-		} else {
-			return reject("Sản phẩm không tồn tại!");
-		}
-	});
-};
-
 const deleteProduct = (productID) => {
 	return new Promise(async (resolve, reject) => {
 		const findProduct = await Product.findByIdAndDelete(productID);
@@ -195,7 +83,7 @@ const deleteProduct = (productID) => {
 
 const findAll = () => {
 	return new Promise(async (resolve, reject) => {
-	  const findProduct = await Product.find().populate('category', 'categoryName');
+	  const findProduct = await Product.find().populate('category brand', 'categoryName brandName');
 	  if (findProduct) {
 		return resolve(findProduct);
 	  } else {
@@ -206,7 +94,7 @@ const findAll = () => {
 
 const findProduct = (productID) => {
 	return new Promise(async (resolve, reject) => {
-		const findProduct = await Product.findById(productID).populate('category', 'categoryName');
+		const findProduct = await Product.findById(productID).populate('category brand', 'categoryName brandName');
 		if (findProduct) {
 			return resolve(findProduct);
 		} else {
@@ -240,9 +128,7 @@ const searchProducts = (search) => {
 
 module.exports = {
 	addProduct: addProduct,
-	editTimer: editTimer,
-	editSpeaker: editSpeaker,
-	editAmplifier: editAmplifier,
+	editProduct: editProduct,
 	deleteProduct: deleteProduct,
 	findAll: findAll,
 	findProduct: findProduct,

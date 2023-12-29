@@ -10,7 +10,6 @@ const addBrand = (data) => {
 			const newData = {
 				brandName: data.brandName,
 				description: data.description,
-                productOfBrand: data.productOfBrand
 			}
 			await Brand(newData)
 				.save()
@@ -34,7 +33,6 @@ const editBrand = (data) => {
 					$set: {
 						brandName: data.brandName,
 						description: data.description,
-                        productOfBrand: productOfBrand
 					},
 				}, {
 					new: true,

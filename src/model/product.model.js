@@ -10,12 +10,20 @@ const productSchema = new mongoose.Schema({
 		ref: "Category",
 		required: true
 	},
+	subCategory: { type: String, required: true },
+	brand: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Brand",
+		required: true
+	},
 	origin: { type: String, required: true },
+	video: { type: String},
 	variants: [{
 		color: String,
 		images: [String],
 		price: String
 	}],
+	active: { type: Boolean, default: true },
 	moreAttribute: {}
 }, { timestamps: true });
 
