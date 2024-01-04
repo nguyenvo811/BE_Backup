@@ -83,14 +83,14 @@ const deleteProduct = (productID) => {
 
 const findAll = () => {
 	return new Promise(async (resolve, reject) => {
-	  const findProduct = await Product.find().populate('category brand', 'categoryName brandName');
-	  if (findProduct) {
-		return resolve(findProduct);
-	  } else {
-		return reject("Kho dữ liệu trống!");
-	  }
+		const findProduct = await Product.find().populate('category brand', 'categoryName brandName');
+		if (findProduct) {
+			return resolve(findProduct);
+		} else {
+			return reject("Kho dữ liệu trống!");
+		}
 	});
-  };
+};
 
 const findProduct = (productID) => {
 	return new Promise(async (resolve, reject) => {
@@ -107,6 +107,7 @@ const findProductByCategory = (categoryID) => {
 	return new Promise(async (resolve, reject) => {
 		const filtering = await Product.find({ category: categoryID }).populate("category", "categoryName")
 		if (filtering) {
+			console.log(filtering)
 			return resolve(filtering);
 		} else {
 			return reject("Sản phẩm không tồn tại!");
@@ -114,16 +115,22 @@ const findProductByCategory = (categoryID) => {
 	})
 }
 
+function removeSpecialCharacters(str) {
+	return str.replace(/[^\w\s]/gi, '');
+}
+
 const searchProducts = (search) => {
 	return new Promise(async (resolve, reject) => {
-		const searching = await Product.find({ "productName": { $regex: ".*" + search + ".*", $options: "i" } })
-		console.log(searching)
+		const sanitizedSearch = removeSpecialCharacters(search);
+		const regexPattern = sanitizedSearch.split('').join('.*');
+		const query = { "productName": { $regex: ".*" + regexPattern + ".*", $options: "i" } };
+		const searching = await Product.find(query);
 		if (searching.length > 0) {
 			return resolve(searching);
 		} else {
 			return reject("Không tìm thấy sản phẩm!");
 		}
-	})
+	});
 }
 
 module.exports = {

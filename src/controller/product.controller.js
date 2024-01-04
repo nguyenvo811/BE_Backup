@@ -321,7 +321,7 @@ const findProductByCategory = async (req, res) => {
 };
 
 const searchProducts = async (req, res) => {
-	const productName = req.body.search;
+	const productName = req.query.search;
 	try {
 		await productHelper
 			.searchProducts(productName)

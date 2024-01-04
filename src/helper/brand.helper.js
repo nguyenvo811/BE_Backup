@@ -4,8 +4,8 @@ const addBrand = (data) => {
 	return new Promise(async (resolve, reject) => {
 		const findBrand = await Brand.findOne({ brandName: data.brandName });
 		if (findBrand) {
-			console.log("Nhãn hiệu đã tồn tại!");
-			return reject("Nhãn hiệu đã tồn tại");
+			console.log("Thương hiệu đã tồn tại!");
+			return reject("Thương hiệu đã tồn tại");
 		} else {
 			const newData = {
 				brandName: data.brandName,
@@ -47,7 +47,7 @@ const editBrand = (data) => {
 					return reject(error);
 				});
 		} else {
-			return reject("Nhãn hiệu không tồn tại!");
+			return reject("Thương hiệu không tồn tại!");
 		}
 	});
 };
@@ -80,7 +80,7 @@ const deleteBrand = (brandID) => {
 		if (findBrand) {
 			return resolve(findAll());
 		} else {
-			return reject("Nhãn hiệu không tồn tại!");
+			return reject("Thương hiệu không tồn tại!");
 		}
 	});
 };
