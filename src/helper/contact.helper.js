@@ -14,6 +14,7 @@ const addContact = (data) => {
 			const newData = {
 				contactName: data.contactName,
 				numberPhone: data.numberPhone,
+				description: data.description,
 			}
 			await Contact(newData)
 				.save()
@@ -37,6 +38,7 @@ const editContact = (data) => {
 					$set: {
 						contactName: data.contactName,
 						numberPhone: data.numberPhone,
+						description: data.description,
 					},
 				}, {
 					new: true,

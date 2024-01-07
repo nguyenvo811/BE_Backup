@@ -5,6 +5,7 @@ const addContact = async (req, res) => {
   const newData = new Contact({
     contactName: req.body.contactName,
     numberPhone: req.body.numberPhone,
+    description: req.body.description,
   });
   console.log(newData)
   try {
@@ -26,7 +27,8 @@ const editContact = async (req, res) => {
     const Contact = {
       contactID: req.params.contactID,
       contactName: req.body.contactName,
-      numberPhone: req.body.numberPhone
+      numberPhone: req.body.numberPhone,
+      description: req.body.description,
     };
     await contactHelper
       .editContact(Contact)
