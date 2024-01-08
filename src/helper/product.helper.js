@@ -14,11 +14,15 @@ const addProduct = (data) => {
 				category: data.category,
 				subCategory: data.subCategory,
 				origin: data.origin,
+				variantCategory: data.variantCategory,
+				shortDescription: data.shortDescription,
 				variants: data.variants,
 				brand: data.brand,
 				video: data.video,
 				active: data.active,
-				moreAttribute: data.moreAttribute
+				newest: data.newest,
+				bestSeller: data.bestSeller,
+				specifications: data.specifications,
 			};
 			await Product(newData)
 				.save()
@@ -46,11 +50,15 @@ const editProduct = (data) => {
 						category: data.category,
 						subCategory: data.subCategory,
 						origin: data.origin,
+						variantCategory: data.variantCategory,
+						shortDescription: data.shortDescription,
 						variants: data.variants,
 						brand: data.brand,
 						video: data.video,
 						active: data.active,
-						moreAttribute: data.moreAttribute
+						newest: data.newest,
+						bestSeller: data.bestSeller,
+						specifications: data.specifications,
 					},
 				}, {
 					new: true,
