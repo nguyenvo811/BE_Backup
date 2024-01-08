@@ -15,6 +15,7 @@ const productRoute = require("./src/route/product.route");
 const brandRoute = require("./src/route/brand.route");
 const newsRoute = require("./src/route/news.route");
 const contactRoute = require("./src/route/contact.route");
+const customerRoute = require("./src/route/customer.route");
 
 // Increase the payload size limit for JSON and URL-encoded data
 app.use(express.json({ limit: '50mb' }));
@@ -37,7 +38,7 @@ app.set("view engine", "ejs");
 
 connectDB();
 
-app.use(userRoute, categoryRoute, productRoute, brandRoute, newsRoute, contactRoute);
+app.use(userRoute, categoryRoute, productRoute, brandRoute, newsRoute, contactRoute, customerRoute);
 app.use(userModel);
 
 

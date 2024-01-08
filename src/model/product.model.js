@@ -24,7 +24,12 @@ const productSchema = new mongoose.Schema({
 		price: String
 	}],
 	active: { type: Boolean, default: true },
-	moreAttribute: {}
+	newest: { type: Boolean, default: true },
+	bestSeller: { type: Boolean, default: false },
+	specifications: [{
+		name: String,
+		value: String
+	}],
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);
