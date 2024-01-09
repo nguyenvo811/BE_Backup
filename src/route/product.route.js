@@ -5,7 +5,7 @@ const { verifyToken, requiredSignIn, isStaff } = require("../middleware/auth");
 const handleFileUploads = require('../middleware/multerMiddleware');
 
 router.post("/products/add-product", requiredSignIn, isStaff, Product.addProduct);
-router.patch("/products/:productID", requiredSignIn, isStaff, Product.editProduct);
+router.patch("/products/:productID", requiredSignIn, isStaff, verifyToken, Product.editProduct);
 router.delete("/products/:productID", requiredSignIn, verifyToken, Product.deleteProduct);
 router.get("/products", requiredSignIn, isStaff, Product.findAll);
 

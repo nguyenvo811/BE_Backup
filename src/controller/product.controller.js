@@ -6,11 +6,11 @@ const addProduct = async (req, res) => {
 
 	// Check if files were uploaded
 	if (req.files && req.files.length > 0) {
-			// Assuming you have only one image file for simplicity
-			const imageBuffer = req.files[0].buffer;
-			const imageData = imageBuffer.toString('base64');
-			// Add the image data to the description or handle it separately
-			description += `<img src="data:image/png;base64,${imageData}" />`;
+		// Assuming you have only one image file for simplicity
+		const imageBuffer = req.files[0].buffer;
+		const imageData = imageBuffer.toString('base64');
+		// Add the image data to the description or handle it separately
+		description += `<img src="data:image/png;base64,${imageData}" />`;
 	}
 
 	const newProduct = new Product({
@@ -26,7 +26,7 @@ const addProduct = async (req, res) => {
 		variants: req.body.variants,
 		active: req.body.active,
 		newest: req.body.newest,
-		bestSeller: req.body.active,
+		bestSeller: req.body.bestSeller,
 		specifications: req.body.specifications
 	});
 	console.log(newProduct)
@@ -46,28 +46,35 @@ const addProduct = async (req, res) => {
 
 const editProduct = async (req, res) => {
 	try {
+		let description = req.body.description;
+
+		// Check if files were uploaded
+		if (req.files && req.files.length > 0) {
+			// Assuming you have only one image file for simplicity
+			const imageBuffer = req.files[0].buffer;
+			const imageData = imageBuffer.toString('base64');
+			// Add the image data to the description or handle it separately
+			description += `<img src="data:image/png;base64,${imageData}" />`;
+		}
+
 		const product = {
 			productID: req.params.productID,
 			productName: req.body.productName,
-			description: req.body.description,
+			description: description,
 			category: req.body.category,
 			subCategory: req.body.subCategory,
-			shortDescription: req.body.shortDescription,
 			origin: req.body.origin,
+			shortDescription: req.body.shortDescription,
 			brand: req.body.brand,
 			video: req.body.video,
+			variantCategory: req.body.variantCategory,
 			variants: req.body.variants,
 			active: req.body.active,
-			moreAttribute: {
-				supplyTimer: req.body.supplyTimer,
-				switchContacts: req.body.switchContacts,
-				maximumLoadContact: req.body.maximumLoadContact,
-				programCapacity: req.body.programCapacity,
-				saveProgram: req.body.saveProgram,
-				batteryMemory: req.body.batteryMemory
-			}
+			newest: req.body.newest,
+			bestSeller: req.body.bestSeller,
+			specifications: req.body.specifications
 		};
-		console.log("update image", req.body.variants)
+		console.log(product)
 		await productHelper
 			.editProduct(product)
 			.then((result) => {
